@@ -1,26 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Reportes/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Reportes from './pages/Reportes.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Reportes
   }
 }
 </script>
 
 <style>
+body{
+  
+  background: linear-gradient(186deg, rgba(2,0,36,1) 0%, rgba(7,165,255,1) 0%, rgba(0,98,153,1) 100%);
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nunito', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+  padding-top: 1.5rem;
+  padding-bottom: 10rem;
 }
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
 </style>
