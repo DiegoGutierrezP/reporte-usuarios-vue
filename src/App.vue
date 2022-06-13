@@ -15,7 +15,7 @@ export default {
 
 <style>
 body{
-  
+  scroll-behavior: smooth;
   background: linear-gradient(186deg, rgba(2,0,36,1) 0%, rgba(7,165,255,1) 0%, rgba(0,98,153,1) 100%);
 }
 #app {
@@ -24,7 +24,7 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 1.5rem;
   padding-bottom: 10rem;
 }

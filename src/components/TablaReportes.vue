@@ -7,7 +7,7 @@
             <th>Codigo</th>
             <th>Titulo</th>
             <th>Fecha Registro</th>
-            <th></th>
+            <th width="50px" ></th>
           </tr>
         </thead>
       </table>
@@ -18,8 +18,8 @@
           <tr v-for="report in reports" :key="report.id">
             <td>{{ report.id }}</td>
             <td>{{ report.title }}</td>
-            <td>{{ formatDate(report.created_at) }}</td>
-            <td></td>
+            <td>{{formatDate(report.created_at)}}</td>
+            <td width="80px"  ><button class="btn-eye" v-on:click="this.$emit('showReport',report.id)"  ><i class="fa-solid fa-eye"></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -34,34 +34,16 @@ export default {
   name: "TablaReportes",
   data() {
     return {
-      reports: [],
       formatDate:formatDateTimeShow,
     };
   },
+  props:{
+    reports:Array
+  },
   mounted() {
-    this.listarReportes();
   },
   methods: {
-    async listarReportes() {
-      let options = {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-      try {
-        let res = await fetch(`http://tkambio.test/api/list-reports`, options),
-          json = await res.json();
-
-        if (!res.ok) throw { status: res.status, statusText: res.statusText };
-
-        this.reports = json.data;
-      } catch (err) {
-        console.log(err);
-        this.reports = [];
-      }
-    },
+    
 
   },
 };
@@ -79,7 +61,7 @@ table {
   border-radius: 10px 10px 0 0;
 }
 .table-body {
-  height: 500px;
+  height: 400px;
   overflow-x: auto;
   margin-top: 0;
   border: 1px solid #dfdfdf;
@@ -105,5 +87,18 @@ td {
     background: #fff;
     border-top: 1px solid #dee2e6;
     color: #000;
+}
+.btn-eye{
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  margin:auto;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #ffbe12;
+  color: #292929;
+}
+.btn-eye:hover{
+  opacity: 0.9;
 }
 </style>

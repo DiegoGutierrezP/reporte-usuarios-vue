@@ -10,12 +10,12 @@
       <div class="content-dates">
         <div class="form-group">
           <label>Desde: *</label>
-          <input type="date" v-model="form.startDate" />{{form.startDate}}
+          <input type="date" v-model="form.startDate" min="1980-01-01" v-bind:max="form.endDate" />
           <small>{{errors.startDate && errors.startDate}}</small>
         </div>
         <div class="form-group">
           <label>Hasta: *</label>
-          <input type="date" v-model="form.endDate" />
+          <input type="date" v-model="form.endDate" v-bind:min="form.startDate"  />
           <small>{{errors.endDate && errors.endDate}}</small>
         </div>
       </div>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
    export default {
        name:'FormReporte',
        data() {
@@ -55,7 +56,10 @@
             submirGenerateReport(e){
                 e.preventDefault();
                 this.errors = this.validateForm();
-                console.log(this.validateForm())
+                if(Object.keys(this.errors).length === 0){
+                  this.registrarReporte();
+                  this.cancelarRegistro();
+                }
             },
             validateForm(){
                 let errors ={};
@@ -70,6 +74,31 @@
                 }
 
                 return errors;
+            },
+            async registrarReporte(){
+              let options = {
+                method: "POST",
+                body:JSON.stringify({
+                  title:this.form.title,
+                  start:this.form.startDate,
+                  end:this.form.endDate
+                }),
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+              };
+              try{
+                let res = await fetch(`http://tkambio.test/api/generate-report`,options);
+                if (!res.ok) throw { status: res.status, statusText: res.statusText };
+
+                let json = await res.json();
+                //console.log(json);
+                this.$emit('recargarTabla',json.msg);
+                
+              }catch(err){
+                console.log(err);
+              }
             }
        }
    }
@@ -127,7 +156,7 @@ label {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
-  margin: 0.5rem 0;
+  margin: 0.4rem 0;
 }
 .content-btn input {
   padding: 10px 15px;
