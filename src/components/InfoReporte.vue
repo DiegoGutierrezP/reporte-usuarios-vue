@@ -1,6 +1,6 @@
 <template>
     <div class="content-info">
-        <h3>Info del Reporte</h3>
+        <h3>Información del Reporte</h3>
         <div class="content-table">
             <table>
                 <tbody>
@@ -10,11 +10,11 @@
                 </tr>
                  <tr>
                     <th>Desde:</th>
-                    <td>{{report.title}}</td>
+                    <td>{{report.startDate}}</td>
                 </tr>
                  <tr>
                     <th>Hasta:</th>
-                    <td>{{report.title}}</td>
+                    <td>{{report.endDate}}</td>
                 </tr>
                 </tbody>
             </table>

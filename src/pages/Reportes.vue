@@ -98,6 +98,7 @@ export default {
     abrirFormRegistro(){
         this.form = true
         this.showInfo = false
+        this.cerrarAlert();
     },
     recargarTabla(msg) {
       this.listarReportes();
@@ -109,6 +110,8 @@ export default {
       this.response.open = false;
     },
     showInfoReport(report) {
+      this.form = false;
+      this.cerrarAlert();
       this.getReportXId(report);
        this.showInfo = true;
        scrollTo({

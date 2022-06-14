@@ -1,6 +1,9 @@
 <template>
   <div class="table-report">
     <div class="table-header">
+      <div class="search-content">
+        <input type="search" v-model="search"  placeholder="Buscar" />
+      </div>
       <table>
         <thead>
           <tr>
@@ -14,12 +17,17 @@
     </div>
     <div class="table-body">
       <table>
-        <tbody>
-          <tr v-for="report in reports" :key="report.id">
+        <tbody v-if="reports2.length > 0">
+          <tr  v-for="report in reports2" :key="report.id">
             <td>{{ report.id }}</td>
             <td>{{ report.title }}</td>
             <td>{{formatDate(report.created_at)}}</td>
             <td width="80px"  ><button class="btn-eye" v-on:click="this.$emit('showReport',report.id)"  ><i class="fa-solid fa-eye"></i></button></td>
+          </tr>
+        </tbody>
+        <tbody v-else >
+          <tr>
+            <td colspan="4" style="text-align:center; font-size:1rem;padding:2rem 0;">No hay registros que mostrar</td>
           </tr>
         </tbody>
       </table>
@@ -32,18 +40,50 @@ import { formatDateTimeShow } from '@/helpers/dates';
 
 export default {
   name: "TablaReportes",
-  data() {
-    return {
-      formatDate:formatDateTimeShow,
-    };
-  },
   props:{
     reports:Array
   },
-  mounted() {
+  data() {
+    return {
+      formatDate:formatDateTimeShow,
+      filterData:[],
+      searchFilter:''
+    };
+  },
+  computed:{
+    reports2:{
+      get(){
+        return this.searchFilter.length === 0 ?  this.reports : this.filterData ;
+      },
+      set(newValue){
+        this.filterData = newValue;
+      }
+    },
+    search:{
+      get() {
+        return this.searchFilter
+      },
+      set(newValue) {
+        this.searchFilter = newValue;
+        if(!newValue.trim()){
+          this.reports2 = this.reports
+        }else{
+          let arr = this.reports.filter(function(el) {
+              return el.title.toLowerCase().indexOf(newValue.toLowerCase()) > -1;
+          });
+          this.reports2 = arr;
+        }
+        
+      }
+    }
+  },
+  mounted(){
+    console.log(this.reports)
   },
   methods: {
-    
+    filerData(){
+      console.log('asds')
+    },
 
   },
 };
@@ -101,4 +141,23 @@ td {
 .btn-eye:hover{
   opacity: 0.9;
 }
+.search-content{
+  width: 250px;
+  position: relative;
+  padding: 10px;
+  float: right;
+  padding-right: 20px;
+}
+.search-content input{
+  padding: 8px 12px;
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  border-radius: 15px;
+}
+.search-content input:focus{
+  outline: none !important;
+  border: 1px solid #ffbe12;
+}
+
 </style>

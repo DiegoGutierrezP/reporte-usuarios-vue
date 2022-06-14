@@ -1,6 +1,7 @@
 <template>
   <div class="content-form">
     <form @submit="submirGenerateReport">
+    <h3>Generar Reporte</h3>
       <div class="form-group">
         <label>Titulo: *</label>
         <input type="text" v-model="form.title" placeholder="Titulo del reporte" />
