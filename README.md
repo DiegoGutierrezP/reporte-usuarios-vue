@@ -1,4 +1,6 @@
-# reporte usuarios vue
+# Reporte usuarios vue
+
+Aplicacion que genera reportes en excel de usuarios registrados en base de datos, se necesita el backend.
 
 ## Project setup
 ```
